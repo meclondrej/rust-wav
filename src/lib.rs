@@ -10,10 +10,10 @@ fn array_to_bytes<T>(arr: &[T]) -> Vec<u8> {
 }
 
 pub struct WavH {
-    audio_size_bytes: u32,
-    audio_channels: u16,
-    sample_rate: u32,
-    bytes_per_channel_sample: u16,
+    pub audio_size_bytes: u32,
+    pub audio_channels: u16,
+    pub sample_rate: u32,
+    pub bytes_per_channel_sample: u16,
 }
 
 impl WavH {
