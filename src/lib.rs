@@ -50,9 +50,9 @@ impl WavH {
     }
 }
 
-pub fn make_wav_bytes<T>(header: &WavH, audio: Vec<T>) -> Vec<u8> {
+pub fn make_wav_bytes<T>(header: &WavH, audio: &Vec<T>) -> Vec<u8> {
     let mut wav: Vec<u8> = vec![];
     wav.extend(&(header.to_bytestring()));
-    wav.extend(array_to_bytes::<T>(&audio));
+    wav.extend(array_to_bytes::<T>(audio));
     return wav;
 }
