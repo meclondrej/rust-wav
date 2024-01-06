@@ -1,4 +1,4 @@
 [package]
-name = "rust-wav"
+name = "rust_wav"
 version = "0.1.0"
 edition = "2021"
