@@ -10,7 +10,7 @@ fn array_to_bytes<T>(arr: &[T]) -> Vec<u8> {
 }
 
 pub struct WavH {
-    pub audio_size_bytes: u32,
+    pub sample_count: u32,
     pub audio_channels: u16,
     pub sample_rate: u32,
     pub bytes_per_channel_sample: u16,
@@ -25,7 +25,8 @@ impl WavH {
             * (self.audio_channels as u32);
         let bytes_per_sample: u16 = self.bytes_per_channel_sample * self.audio_channels;
         let bits_per_channel_sample: u16 = self.bytes_per_channel_sample * 8u16;
-        let file_size_bytes_after_entry_2: u32 = 36u32 + self.audio_size_bytes;
+        let audio_size_bytes: u32 = self.sample_count * (self.bytes_per_channel_sample as u32) * (self.audio_channels as u32);
+        let file_size_bytes_after_entry_2: u32 = 36u32 + audio_size_bytes;
 
         // RIFF chunk, totals 12 bytes
         header_bytes[0..=3].copy_from_slice(b"RIFF"); // 4 bytes "RIFF" ascii
@@ -44,7 +45,7 @@ impl WavH {
 
         // data chunk, totals 8 bytes excluding following data
         header_bytes[36..=39].copy_from_slice(b"data"); // 4 bytes "data" ascii
-        header_bytes[40..=43].copy_from_slice(&(self.audio_size_bytes.to_le_bytes())); // 4 bytes audio bytes u32
+        header_bytes[40..=43].copy_from_slice(&(audio_size_bytes.to_le_bytes())); // 4 bytes audio bytes u32
 
         return header_bytes;
     }
